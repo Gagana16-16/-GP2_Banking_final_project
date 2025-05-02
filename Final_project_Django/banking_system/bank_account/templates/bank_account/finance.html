@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>EMI Calculator</title>
+    <!-- Bootstrap 5 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-sm">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>EMI Calculator</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+
+                        <div class="mb-3">
+                            <label for="principal" class="form-label">Principal Amount (₹)</label>
+                            <input type="number" class="form-control" name="principal" min="1" step="0.01" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="rate" class="form-label">Annual Interest Rate (%)</label>
+                            <input type="number" class="form-control" name="rate" min="0" step="0.01" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="tenure" class="form-label">Tenure (in years)</label>
+                            <input type="number" class="form-control" name="tenure" min="1" required>
+                        </div>
+
+                        
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Calculate EMI</button>
+                        </div>
+                    </form>
+                {% if error_message %}
+                    <div class="alert alert-danger">
+                        {{ error_message }}
+                    </div>
+                {% endif %}
+                </div>
+                {% if emi is not None%}
+                    <div class="alert alert-success mt-4 text-center">
+                        <h5>Your Monthly EMI: ₹{{ emi }}</h5>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+<div class="text-center mt-3">
+    <a href="{% url 'dashboard' %}" class="text-decoration-none">Back to Dashboard</a>
+</div>
+<!-- Bootstrap JS (optional for some components) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
